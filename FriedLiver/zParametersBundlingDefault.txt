@@ -1,6 +1,6 @@
 
 
-s_verbose = false;
+s_verbose = true;
 
 s_erodeSIFTdepth = true;
 s_sendUplinkFeedbackImage = true;

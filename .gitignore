@@ -1,0 +1,8 @@
+FriedLiver/x64/Debug/
+FriedLiver/.vs/
+*.user
+*.opendb
+*.db
+FriedLiver/CompiledShaders/
+*.ipch
+FriedLiver/vc120.pdb

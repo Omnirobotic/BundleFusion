@@ -1,5 +1,5 @@
 // 0=Kinect; 1=PrimeSense; 2=KinectOne; 3=BinaryDumpReader; 4=NetworkSensor; 5=IntelSensor; 6=RealSense; 7=StructureSensor; 8=SensorDataReader (for offline processing)
-s_sensorIdx = 7;
+s_sensorIdx = 2;
 
 s_numSolveFramesBeforeExit = 30;//-1 //#frames to run after solve done, then saves and exits; -1 to stop after no more reintegration ops
 
@@ -94,7 +94,7 @@ s_remappingDepthDiscontinuityThresLin	 = 0.01f;
 
 s_bUseCameraCalibration = false;
 
-s_marchingCubesMaxNumTriangles = 3000000; // max buffer size for marching cube
+s_marchingCubesMaxNumTriangles = 1000000; // max buffer size for marching cube - WAS 3000000
 
 //streaming parameters (streaming disabled for BundleFusion)
 s_streamingEnabled = false;
