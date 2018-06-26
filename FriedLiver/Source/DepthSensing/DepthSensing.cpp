@@ -983,7 +983,14 @@ void CALLBACK OnD3D11FrameRender(ID3D11Device* pd3dDevice, ID3D11DeviceContext* 
 	while (g_CudaImageManager->hasBundlingFrameRdy()) { //wait until bundling is done with previous frame
 		ConditionManager::waitImageManagerFrameReady(ConditionManager::Recon);
 	}
-	bool bGotDepth = g_CudaImageManager->process();
+	
+	bool bGotDepth = false;
+	//try until it work before because if we continue with depth but no color, it causes a deadlock
+	while(bGotDepth == false)
+	{
+		bGotDepth = g_CudaImageManager->process();
+	}
+	
 	if (bGotDepth) {
 		g_CudaImageManager->setBundlingFrameRdy();					//ready for bundling thread
 		ConditionManager::unlockAndNotifyImageManagerFrameReady(ConditionManager::Recon);

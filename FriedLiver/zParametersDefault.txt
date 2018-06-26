@@ -42,7 +42,7 @@ s_SDFTruncation = 0.06f;				//truncation in meter
 s_SDFTruncationScale = 0.02f;			//truncation scale in meter per meter
 s_SDFMaxIntegrationDistance = 3.0f;		//maximum integration in meter
 s_SDFIntegrationWeightSample = 1;		//weight for an integrated depth value
-s_SDFIntegrationWeightMax = 99999999;	//maximum integration weight for a voxel
+s_SDFIntegrationWeightMax = 1000;	//maximum integration weight for a voxel
 // s_SDFBlockSize is pound defined (SDF_BLOCK_SIZE)
 // s_hashBucketSize is pound defined (HASH_BUCKET_SIZE)
 s_hashNumBuckets = 800000;				//smaller voxels require more space
@@ -94,7 +94,7 @@ s_remappingDepthDiscontinuityThresLin	 = 0.01f;
 
 s_bUseCameraCalibration = false;
 
-s_marchingCubesMaxNumTriangles = 1000000; // max buffer size for marching cube - WAS 3000000
+s_marchingCubesMaxNumTriangles = 300000; // max buffer size for marching cube - WAS 3000000
 
 //streaming parameters (streaming disabled for BundleFusion)
 s_streamingEnabled = false;

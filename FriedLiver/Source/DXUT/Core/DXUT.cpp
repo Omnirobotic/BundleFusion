@@ -3472,6 +3472,11 @@ HRESULT DXUTCreateD3D11Views( ID3D11Device* pd3dDevice, ID3D11DeviceContext* pd3
     return hr;
 }
 
+#include <cuda_runtime_api.h>
+#include <cuda_d3d11_interop.h>
+#include <rendercheck_d3d11.h>
+#include <helper_cuda.h>
+#include <helper_functions.h>    // includes cuda.h and cuda_runtime_api.h
 
 //--------------------------------------------------------------------------------------
 // Creates the 3D environment
@@ -3519,6 +3524,20 @@ HRESULT DXUTCreate3DEnvironment11( ID3D11Device* pd3d11DeviceFromApp )
             ddt = D3D_DRIVER_TYPE_REFERENCE;
             pAdapter = NULL;
         }
+
+		int cuDevice;
+		cudaError cuStatus;
+		cuStatus = cudaD3D11GetDevice(&cuDevice, pAdapter);
+		
+		//The first device might be the motherboard Graphic card not supporting cuda
+		//so try the second device
+		if (cudaSuccess != cuStatus)
+		{
+			pNewDeviceSettings->d3d11.AdapterOrdinal++;
+			hr = pDXGIFactory->EnumAdapters1(pNewDeviceSettings->d3d11.AdapterOrdinal, &pAdapter);
+		}
+		cuStatus = cudaD3D11GetDevice(&cuDevice, pAdapter);
+
 
         if( SUCCEEDED( hr ) )
         {

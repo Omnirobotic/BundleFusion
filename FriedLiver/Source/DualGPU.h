@@ -87,7 +87,11 @@ public:
 
 	static DualGPU& get() {
 		static DualGPU dualGPU;
-		if (!dualGPU.m_bIsInit) dualGPU.init();
+		if (!dualGPU.m_bIsInit)
+		{
+			//specify the number of GPU to use
+			dualGPU.init(1,1);
+		}
 		return dualGPU;
 	}
 
@@ -107,7 +111,11 @@ public:
 
 	enum {
 		DEVICE_RECONSTRUCTION = 0,
-		DEVICE_BUNDLING = 1
+		//using only one GPU
+		DEVICE_BUNDLING = 0
+		//using two GPU
+		//DEVICE_BUNDLING = 1
+		
 	};
 
 private:

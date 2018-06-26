@@ -1,5 +1,16 @@
 
 #include "stdafx.h"
+// This header inclues all the necessary D3D11 and CUDA includes
+#include <dynlink_d3d11.h>
+#include <cuda_runtime_api.h>
+#include <cuda_d3d11_interop.h>
+
+// includes, project
+#include <rendercheck_d3d11.h>
+#include <helper_cuda.h>
+#include <helper_functions.h>    // includes cuda.h and cuda_runtime_api.h
+
+
 
 #include "DX11QuadDrawer.h"
 
@@ -180,12 +191,22 @@ HRESULT DX11QuadDrawer::OnD3D11CreateDevice( ID3D11Device* pd3dDevice )
 	descTex.ArraySize = 1;
 	descTex.MipLevels = 1;
 	descTex.Format = DXGI_FORMAT_R32G32B32A32_FLOAT;
-	descTex.Width = s_tmpTextureWidth;
-	descTex.Height = s_tmpTextureHeight;
+	descTex.Width =  s_tmpTextureWidth;
+	descTex.Height =  s_tmpTextureHeight;
 
 	V_RETURN(pd3dDevice->CreateTexture2D(&descTex, NULL, &s_pTmpTexture));
 	V_RETURN(pd3dDevice->CreateShaderResourceView(s_pTmpTexture, NULL, &s_pTmpTextureSRV));
 
+	//for debuging purpose, get the cuda error string. 
+	//bellow is the first cuda call, if you have an error before the first call, 
+	//then 
+	std::string error;
+	cudaError_t err = cudaGetLastError();	
+	if (err != cudaSuccess)
+	{
+		error = std::string(cudaGetErrorString(err));
+		MessageBox(0, L"Cuda error before the first cuda call!!!", L"Error", MB_ICONEXCLAMATION);
+	}
 	cutilSafeCall(cudaGraphicsD3D11RegisterResource(&s_dCuda, s_pTmpTexture, cudaGraphicsRegisterFlagsNone));
 	cutilSafeCall(cudaGraphicsResourceSetMapFlags(s_dCuda, cudaGraphicsMapFlagsWriteDiscard));
 

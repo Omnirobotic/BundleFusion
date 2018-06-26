@@ -111,7 +111,7 @@ static bool dynlinkLoadD3D11API( void )
 
 #if 1
     // This may fail if Direct3D 11 isn't installed
-    s_hModD3D11 = LoadLibrary( "d3d11.dll" );
+    s_hModD3D11 = LoadLibrary( L"d3d11.dll" );
     if( s_hModD3D11 != NULL )
     {
         sFnPtr_D3D11CreateDevice = ( LPD3D11CREATEDEVICE )GetProcAddress( s_hModD3D11, "D3D11CreateDevice" );
@@ -119,14 +119,14 @@ static bool dynlinkLoadD3D11API( void )
     }
 
 	// first try to load D3DX11CompileFromMemory from DirectX 2010 June
-	s_hModD3DX11 = LoadLibrary( "D3DX11d_43.dll" );
+	s_hModD3DX11 = LoadLibrary( L"D3DX11d_43.dll" );
 	if( s_hModD3DX11 != NULL )
 	{
 		sFnPtr_D3DX11CompileFromMemory =  ( LPD3DX11COMPILEFROMMEMORY )     GetProcAddress( s_hModD3DX11, "D3DX11CompileFromMemory" );
 	}
 	else  	// if absent try to take it from DirectX 2010 Feb
 	{
-		s_hModD3DX11 = LoadLibrary( "D3DX11d_42.dll" );
+		s_hModD3DX11 = LoadLibrary( L"D3DX11d_42.dll" );
 		if( s_hModD3DX11 != NULL )
 		{
 			sFnPtr_D3DX11CompileFromMemory =  ( LPD3DX11COMPILEFROMMEMORY )     GetProcAddress( s_hModD3DX11, "D3DX11CompileFromMemory" );
@@ -135,7 +135,7 @@ static bool dynlinkLoadD3D11API( void )
 
     if( !sFnPtr_CreateDXGIFactory )
     {
-        s_hModDXGI = LoadLibrary( "dxgi.dll" );
+        s_hModDXGI = LoadLibrary( L"dxgi.dll" );
         if( s_hModDXGI )
         {
             sFnPtr_CreateDXGIFactory = ( LPCREATEDXGIFACTORY )GetProcAddress( s_hModDXGI, "CreateDXGIFactory1" );
